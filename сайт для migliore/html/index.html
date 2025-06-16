@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>migliore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background-color: black;
+    }
+
+@font-face {
+ font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+}
+
+    #text {
+      position: relative;
+      z-index: 2;
+      color: white;
+      font-size: 2em;
+      cursor: pointer;
+      text-align: center;
+      top: 45%;
+      transition: color 0.5s ease;
+    }
+
+    #popup {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(28, 22, 22, 0.019);
+      color: black;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(7, 2, 2, 0);
+      z-index: 3;
+      width: 40%;
+      height:430px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background-color: rgba(0, 0, 0, 0.002);
+      opacity: 0;
+      display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-bottom: 80px;
+    }
+
+#popup::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.2); 
+  z-index: -1;
+  border-radius: 10px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+#popup.fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+    .popup-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 120px; 
+  margin-bottom: 15px; 
+}
+
+.rainbow-title {
+  font-size: 2em;
+  text-align: center;
+  background: linear-gradient(270deg, red, orange, yellow, green, cyan, blue, violet, red);
+  background-size: 1500% auto;
+    -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 6s linear infinite;
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+ 
+    #video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      display: none;
+    }
+
+#sound-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 4;
+  background: rgba(255,255,255,0.8);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+#sound-btn:hover {
+  transform: scale(1.1);
+  background: rgba(255,255,255,1);
+}
+
+#volume-slider {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 80px;
+  z-index: 4;
+  width: 100px;
+  height: 5px;
+  cursor: pointer;
+}
+
+.rotate {
+  animation: rotateIcon 0.5s ease;
+}
+
+@keyframes rotateIcon {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.sup{
+    color:rgb(206, 216, 217);
+    text-align: center;
+    font-family:Arial, Helvetica, sans-serif
+}
+
+.rainbow-title{
+    font-family: Montserrat;
+}
+
+@keyframes glowShadow {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+  }
+  25% {
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 0, 255, 0.6);
+  }
+  75% {
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+  }
+}
+
+.bottom-images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.bottom-images img {
+  height: 60px;
+  width: auto;
+  border-radius: 80px;
+  animation: glowShadow 4s infinite ease-in-out;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.bottom-images img:hover {
+  transform: scale(1.1);
+}
+
+.image-text-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+  color: white;
+  font-family: Montserrat, sans-serif;
+  font-size: 1.1em;
+  justify-content: center;
+  
+}
+
+.row-image {
+  height: 30px;
+  width: auto;
+  border-radius: 10px;
+}
+
+.row-text {
+  white-space: nowrap;
+}
+
+.rainbow-title-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+  width: 100%;
+  text-align: center;
+}
+
+.rainbow-title-wrapper .tooltip {
+    
+  visibility: hidden;
+  width: 200px;
+  background-color: #111;
+  color: #fff;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 50px;
+  position: absolute;
+  z-index: 10;
+  bottom: 70%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  font-size: 0.9em;
+}
+
+.rainbow-title-wrapper:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+  </style>
+</head>
+<body onclick="handleClick()">
+
+  <video id="video-bg" autoplay muted loop playsinline>
+    <source src="background.mp4" type="video/mp4">
+    Ваш браузер не поддерживает видео.
+  </video>
+<div id="popup">
+    
+  <img src="pic.PNG" alt="Картинка" class="popup-image">
+   <div class="rainbow-title-wrapper">
+  <h3 class="rainbow-title">migliore</h3>
+  <div class="tooltip">tg: @migliore</div>
+</div>
+<h3 class="title sup">Владелец канала *bloody risk*  </h3> 
+<h3 class="title sup">Так же участвует в проекте *Преисподня психов* </h3>
+<h3 class="title sup">Является любителем в сфере осинта.</h3>
+<div class="image-text-row">
+  <img src="pon.gif" alt="BLOODY RISK" class="row-image">
+  <span class="row-text">BLOODY RISK</span>
+</div>
+<div class="bottom-images">
+    <img src="tg.png" alt="Картинка 1">
+    <img src="pic.png" alt="Картинка 2">
+   </div>
+</div>
+  <div id="text">click to enter..</div>
+
+  <button id="sound-btn" onclick="toggleSound(event)">🔇</button>
+  <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0" />
+
+  <script>
+let clicked = false;
+
+function handleClick() {
+  if (clicked) return;
+
+  const video = document.getElementById('video-bg');
+  const btn = document.getElementById('sound-btn');
+  const slider = document.getElementById('volume-slider');
+  const text = document.getElementById('text');
+  const popup = document.getElementById('popup');
+
+  video.style.display = 'block';
+  btn.style.display = 'flex';
+  slider.style.display = 'block';
+  text.style.display = 'none';
+  popup.style.display = 'block';
+  popup.offsetHeight;
+  popup.classList.add('fade-in');
+
+  
+  video.muted = false;
+  video.volume = 0.2;
+  slider.value = 0.2;
+
+  updateSoundIcon();
+
+  
+  video.play().catch((e) => {
+    console.warn('Не удалось воспроизвести видео:', e);
+  });
+
+  clicked = true;
+}
+
+
+function toggleSound(event) {
+  event.stopPropagation();
+  const video = document.getElementById('video-bg');
+  const btn = document.getElementById('sound-btn');
+  const slider = document.getElementById('volume-slider');
+
+  if (!clicked) {
+    handleClick(); 
+  }
+
+
+  if (video.muted || video.volume !== 0.2) {
+    video.muted = false;
+    video.volume = 0.2;
+    slider.value = 0.2;
+  } else {
+   
+    video.muted = true;
+    video.volume = 0;
+    slider.value = 0;
+  }
+
+  updateSoundIcon();
+
+ 
+  btn.classList.remove('rotate');
+  void btn.offsetWidth;
+  btn.classList.add('rotate');
+}
+
+function updateSoundIcon() {
+  const video = document.getElementById('video-bg');
+  const btn = document.getElementById('sound-btn');
+  btn.textContent = (video.muted || video.volume === 0) ? '🔇' : '🔊';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const video = document.getElementById('video-bg');
+  const slider = document.getElementById('volume-slider');
+
+  video.volume = parseFloat(slider.value);
+
+  slider.addEventListener('input', () => {
+    video.volume = parseFloat(slider.value);
+    video.muted = video.volume === 0;
+    updateSoundIcon();
+  });
+});
+
+
+const fullTitle = "@notmigliore";
+let index = 0;
+let direction = 1;
+
+function typeLoop() {
+  document.title = fullTitle.slice(0, index);
+
+  if (direction === 1) {
+    index++;
+    if (index > fullTitle.length) {
+      direction = -1;
+      setTimeout(typeLoop, 1500);
+      return;
+    }
+  } else {
+    index--;
+    if (index < 0) {
+      direction = 1;
+      setTimeout(typeLoop, 1000);
+      return;
+    }
+  }
+
+  setTimeout(typeLoop, 150);
+}
+
+window.onload = typeLoop;
+  </script>
+</body>
+</html>
